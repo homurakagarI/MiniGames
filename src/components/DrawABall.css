@@ -1,0 +1,570 @@
+.draw-ball-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.game-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.draw-ball-container h2 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 2rem;
+}
+
+.game-info {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.mode-badge {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.participants-count {
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.no-participants {
+  text-align: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.ball-machine {
+  background: linear-gradient(145deg, #FF6B6B, #4ECDC4);
+  border-radius: 25px;
+  padding: 30px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+  border: 4px solid #FFD700;
+}
+
+.machine-header {
+  margin-bottom: 20px;
+}
+
+.lights {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.light {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFD700;
+  animation: blink 1.5s infinite alternate;
+}
+
+.light:nth-child(2) { animation-delay: 0.3s; }
+.light:nth-child(3) { animation-delay: 0.6s; }
+.light:nth-child(4) { animation-delay: 0.9s; }
+.light:nth-child(5) { animation-delay: 1.2s; }
+
+@keyframes blink {
+  0% { opacity: 0.3; box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); }
+  100% { opacity: 1; box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+}
+
+.ball-chamber {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.ball {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #f0f0f0, #e0e0e0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 
+    0 8px 25px rgba(0,0,0,0.3),
+    inset 0 2px 10px rgba(255,255,255,0.5),
+    inset 0 -2px 10px rgba(0,0,0,0.1);
+  border: 3px solid #ddd;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.ball.drawing {
+  animation: ballBounce 0.1s linear infinite;
+  background: radial-gradient(circle at 30% 30%, #FFD700, #FFA500, #FF8C00);
+  color: white;
+  box-shadow: 
+    0 8px 25px rgba(255, 165, 0, 0.5),
+    inset 0 2px 10px rgba(255,255,255,0.5),
+    inset 0 -2px 10px rgba(0,0,0,0.2);
+}
+
+@keyframes ballBounce {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg); 
+  }
+  25% { 
+    transform: scale(1.1) rotate(90deg); 
+  }
+  50% { 
+    transform: scale(0.9) rotate(180deg); 
+  }
+  75% { 
+    transform: scale(1.1) rotate(270deg); 
+  }
+}
+
+.chamber-label {
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 15px;
+}
+
+.participants-display {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.participants-display h4 {
+  color: white;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.participant-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.participant-chip {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.participant-chip.selected {
+  background: #FFD700;
+  color: #333;
+  border-color: #fff;
+  transform: scale(1.1);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1.1); }
+  50% { transform: scale(1.2); }
+}
+
+.draw-button {
+  padding: 15px 25px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #96CEB4, #FFEAA7);
+  color: #333;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  width: 100%;
+}
+
+.draw-button:hover:not(.disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  background: linear-gradient(45deg, #FFEAA7, #96CEB4);
+}
+
+.draw-button.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.result-display {
+  margin: 20px 0;
+  padding: 20px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border-radius: 15px;
+  text-align: center;
+  animation: slideUp 0.5s ease;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.result-display h3 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.result-display p {
+  margin: 8px 0;
+  font-size: 1.1rem;
+}
+
+.eliminated-section {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 15px;
+  border: 2px solid #FF6B6B;
+  max-width: 400px;
+  width: 100%;
+}
+
+.eliminated-section h4 {
+  color: #FF6B6B;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.eliminated-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eliminated-participant {
+  background: rgba(255, 107, 107, 0.2);
+  padding: 8px 12px;
+  border-radius: 20px;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.reset-button, .back-button, .select-game-button {
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.reset-button {
+  background: linear-gradient(45deg, #96CEB4, #FFEAA7);
+  color: #333;
+}
+
+.select-game-button {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  color: white;
+  z-index: 1000;
+  position: relative;
+}
+
+.back-button {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+}
+
+.reset-button:hover, .back-button:hover, .select-game-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.select-game-button:hover {
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+}
+
+@keyframes slideUp {
+  0% { 
+    transform: translateY(30px); 
+    opacity: 0; 
+  }
+  100% { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}
+
+@media (max-width: 768px) {
+  .draw-ball-container {
+    padding: 15px;
+  }
+  
+  .draw-ball-container h2 {
+    font-size: 1.5rem;
+  }
+  
+  .ball-machine {
+    padding: 20px;
+  }
+  
+  .game-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .ball {
+    width: 100px;
+    height: 100px;
+    font-size: 2rem;
+  }
+  
+  .draw-button {
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
+}
+
+/* Enhanced Ball Assignment Styles */
+
+/* Balls Grid */
+.balls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.ball-assignment {
+  border-radius: 15px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.ball-assignment.available {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.ball-assignment.assigned {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border-color: #28a745;
+}
+
+.ball-assignment:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.lottery-ball {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+  transition: transform 0.3s ease;
+  position: relative;
+  border: 3px solid white;
+}
+
+.lottery-ball:hover {
+  transform: scale(1.05);
+}
+
+.lottery-ball.drawn {
+  background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.ball-number {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.ball-info {
+  text-align: center;
+}
+
+.ball-name {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.assignment-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.assigned-participant {
+  background: #28a745;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  flex: 1;
+}
+
+.remove-assignment {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.remove-assignment:hover {
+  background: #c82333;
+  transform: scale(1.1);
+}
+
+.participant-selector {
+  width: 100%;
+  padding: 8px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.participant-selector:hover,
+.participant-selector:focus {
+  border-color: #667eea;
+  outline: none;
+}
+
+/* Ball Animation */
+.ball-animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+
+.animated-ball {
+  animation: bounce 0.1s infinite;
+}
+
+.final-ball {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.ball-assignment-info {
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10px) scale(1.1); }
+}
+
+@keyframes glow {
+  from { box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6); }
+  to { box-shadow: 0 12px 35px rgba(255, 215, 0, 0.9), 0 0 20px rgba(255, 215, 0, 0.5); }
+}
+
+/* Remaining Assignments */
+.remaining-assignments {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 25px;
+  margin: 25px 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.remaining-assignments h4 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.assignment-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.assignment-chip {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 2px solid #dee2e6;
+  border-radius: 15px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.assignment-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-color: #667eea;
+}
+
+.assignment-chip .ball-info {
+  font-weight: bold;
+  color: #495057;
+}
+
+.assignment-chip .participant-info {
+  color: #6c757d;
+  font-style: italic;
+}
