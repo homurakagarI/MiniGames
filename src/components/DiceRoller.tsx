@@ -18,7 +18,6 @@ interface DiceResult {
 
 const DiceRoller: React.FC<DiceRollerProps> = ({
   participants,
-  mode,
   onResult,
   onReset,
   onBackToMenu
@@ -26,13 +25,10 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
   const [isRolling, setIsRolling] = useState(false);
   const [results, setResults] = useState<DiceResult[]>([]);
   const [currentRoller, setCurrentRoller] = useState<number>(0);
-  const [gameFinished, setGameFinished] = useState(false);
-  const [winner, setWinner] = useState<Participant | null>(null);
   const [roundParticipants, setRoundParticipants] = useState<Participant[]>([]);
   const [roundNumber, setRoundNumber] = useState(1);
   const [gamePhase, setGamePhase] = useState<'ready' | 'rolling' | 'result'>('ready');
   const [currentlyAnimating, setCurrentlyAnimating] = useState<{[key: string]: number}>({});
-  const [rollingProgress, setRollingProgress] = useState<DiceResult[]>([]);
 
   // Initialize round participants on first load or when participants change
   React.useEffect(() => {
@@ -88,7 +84,6 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
     
     if (survivors.length === 0) {
       // Everyone rolled the same (lowest) number - no one survives
-      setGameFinished(true);
       setGamePhase('result');
       onResult({
         winner: null,
@@ -98,8 +93,6 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
       });
     } else if (survivors.length === 1) {
       // Single survivor - winner!
-      setWinner(survivors[0]);
-      setGameFinished(true);
       setGamePhase('result');
       onResult({
         winner: survivors[0],
@@ -109,7 +102,6 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
       });
     } else {
       // Multiple survivors - continue to next round
-      setGameFinished(false);
       setGamePhase('result');
       onResult({
         winner: null,
@@ -126,10 +118,7 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
     setIsRolling(true);
     setGamePhase('rolling');
     setResults([]);
-    setRollingProgress([]);
     setCurrentRoller(0);
-    setGameFinished(false);
-    setWinner(null);
 
     const allResults: DiceResult[] = [];
 
@@ -139,15 +128,6 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
       
       // Add delay between rolls for dramatic effect
       await new Promise(resolve => setTimeout(resolve, 800));
-      
-      // Create initial rolling state
-      const rollingResult: DiceResult = {
-        participant,
-        roll: 0, // Will be updated during animation
-        diceAnimation: []
-      };
-      
-      setRollingProgress(prev => [...prev, rollingResult]);
       
       // Animate dice rolling with live updates
       const finalRoll = await animateDice(participant.id);
@@ -160,9 +140,6 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
 
       allResults.push(finalResult);
       setResults([...allResults]);
-      
-      // Remove from rolling progress
-      setRollingProgress(prev => prev.filter(r => r.participant.id !== participant.id));
     }
 
     setIsRolling(false);
@@ -176,11 +153,8 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
 
   const reset = () => {
     setResults([]);
-    setRollingProgress([]);
     setCurrentlyAnimating({});
     setCurrentRoller(0);
-    setGameFinished(false);
-    setWinner(null);
     setRoundParticipants(participants.filter(p => !p.isEliminated));
     setRoundNumber(1);
     setGamePhase('ready');
@@ -197,7 +171,6 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
     setRoundNumber(prev => prev + 1);
     setGamePhase('ready');
     setResults([]);
-    setRollingProgress([]);
     setCurrentlyAnimating({});
     setCurrentRoller(0);
   };

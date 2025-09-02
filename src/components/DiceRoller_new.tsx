@@ -26,8 +26,8 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
   const [isRolling, setIsRolling] = useState(false);
   const [results, setResults] = useState<DiceResult[]>([]);
   const [currentRoller, setCurrentRoller] = useState<number>(0);
-  const [gameFinished, setGameFinished] = useState(false);
-  const [winner, setWinner] = useState<Participant | null>(null);
+  const [_gameFinished, setGameFinished] = useState(false);
+  const [_winner, setWinner] = useState<Participant | null>(null);
   const [roundParticipants, setRoundParticipants] = useState<Participant[]>([]);
   const [roundNumber, setRoundNumber] = useState(1);
   const [gamePhase, setGamePhase] = useState<'ready' | 'rolling' | 'result'>('ready');
@@ -226,7 +226,7 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
         <div className="results-section">
           <h3>Round {roundNumber} Results</h3>
           <div className="dice-results">
-            {results.map((result, index) => (
+            {results.map((result) => (
               <div key={result.participant.id} className="dice-result">
                 <div className="participant-info">
                   <div className="participant-avatar">
